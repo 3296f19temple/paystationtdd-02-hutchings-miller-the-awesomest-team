@@ -11,9 +11,11 @@
  */
 package paystation.domain;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PayStationImplTest {
 
@@ -137,5 +139,13 @@ public class PayStationImplTest {
         ps.addPayment(25);
         assertEquals("Insert after cancel should work",
                 10, ps.readDisplay());
+    }
+
+    /**
+     * Verify that cancel doesn't return a null
+     */
+    @Test
+    public void coinMapShouldntBeNull(){
+        assertNotNull("Coin map should not be null", ps.cancel());
     }
 }
