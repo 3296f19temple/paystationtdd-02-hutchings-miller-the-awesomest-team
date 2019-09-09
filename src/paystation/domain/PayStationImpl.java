@@ -65,6 +65,7 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public Map<Integer, Integer> cancel(){
+        timeBought = insertedSoFar = 0;
         return coins;
     }
     
