@@ -42,7 +42,6 @@ public class PayStationImpl implements PayStation {
     public int empty() {
         int tempTotalMoney = totalMoney;
         totalMoney = 0;
-
         return tempTotalMoney;
     }
 
@@ -67,6 +66,7 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public Receipt buy() {
+        totalMoney += insertedSoFar;
         Receipt r = new ReceiptImpl(timeBought);
         reset();
         return r;
