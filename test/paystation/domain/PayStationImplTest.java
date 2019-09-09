@@ -104,6 +104,20 @@ public class PayStationImplTest {
     }
 
     /**
+     * Make sure that this shows an empty value, because we are clearing out what we have entered
+     * @throws IllegalCoinException
+     */
+
+    @Test
+    public void shouldClearAfterEmpty() throws IllegalCoinException {
+        ps.addPayment(25);
+        ps.addPayment(10);
+        ps.addPayment(5);
+        ps.buy();
+        assertEquals("Amount emptied should equal amount added", 40, ps.empty());
+    }
+
+    /**
      * Verify that the pay station is cleared after a buy scenario
      */
     @Test

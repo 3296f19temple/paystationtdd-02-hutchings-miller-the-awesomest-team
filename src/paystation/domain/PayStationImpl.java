@@ -26,6 +26,7 @@ public class PayStationImpl implements PayStation {
     
     private int insertedSoFar;
     private int timeBought;
+    private int totalMoney;
 
     //left side is coin value, right is number of coins
     private Map<Integer, Integer> coins;
@@ -33,9 +34,17 @@ public class PayStationImpl implements PayStation {
     public PayStationImpl (){
         insertedSoFar = 0;
         timeBought = 0;
+        totalMoney = 0;
         coins = new HashMap<>();
     }
 
+
+    public int empty() {
+        int tempTotalMoney = totalMoney;
+        totalMoney = 0;
+
+        return tempTotalMoney;
+    }
 
     @Override
     public void addPayment(int coinValue)
