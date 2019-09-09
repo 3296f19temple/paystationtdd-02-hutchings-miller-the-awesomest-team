@@ -119,6 +119,23 @@ public class PayStationImplTest {
         assertEquals("Amount emptied should equal amount added", 90, ps.empty());
     }
 
+
+    /**
+     * Canceled entry does not add to the amount returned by empty.
+     * @throws IllegalCoinException
+     */
+    @Test
+    public void canceledEntryDoesNotAddAmount() throws IllegalCoinException {
+        ps.addPayment(25);
+        ps.addPayment(10);
+        ps.addPayment(5);
+        ps.buy();
+        ps.addPayment(25);
+        ps.addPayment(25);
+        ps.cancel();
+        assertEquals("Amount emptied should be equal to total before first buy", 40, ps.empty());
+    }
+
     /**
      * Verify that the pay station is cleared after a buy scenario
      */
