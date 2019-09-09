@@ -77,6 +77,10 @@ public class PayStationImpl implements PayStation {
         timeBought = insertedSoFar = 0;
         return coins;
     }
+
+    public int getTotalMoney(){
+        return totalMoney;
+    }
     
     private void reset() {
         timeBought = insertedSoFar = 0;

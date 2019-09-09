@@ -65,4 +65,9 @@ public interface PayStation {
 
      */
     public int empty();
+
+    /**
+     * retrieves the total amount of money in the paystation
+     */
+    public int getTotalMoney();
 }

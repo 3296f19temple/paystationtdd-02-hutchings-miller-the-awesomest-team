@@ -137,6 +137,18 @@ public class PayStationImplTest {
     }
 
     /**
+    Verify Call to empty resets the total to zero
+     */
+    @Test
+    public void emptyShouldResetToZero() throws IllegalCoinException{
+        ps.addPayment(25);
+        ps.addPayment(10);
+        ps.buy();
+        ps.empty();
+        assertEquals("TotalMoney should be zero after emptying", 0, ps.getTotalMoney());
+    }
+
+    /**
      * Verify that the pay station is cleared after a buy scenario
      */
     @Test
