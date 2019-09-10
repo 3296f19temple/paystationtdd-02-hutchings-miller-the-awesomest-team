@@ -28,6 +28,11 @@ public class PayStationImpl implements PayStation {
     private int timeBought;
     private int totalMoney;
 
+    private int previousValue;
+    private final int NICKEL = 5;
+    private final int DIME = 10;
+    private final int QUARTER = 25;
+
     //left side is coin value, right is number of coins
     private Map<Integer, Integer> coins;
 
@@ -36,6 +41,10 @@ public class PayStationImpl implements PayStation {
         timeBought = 0;
         totalMoney = 0;
         coins = new HashMap<>();
+        //initializes hashmap, and per the rules, the map can't be null
+        coins.put(NICKEL, 0);
+        coins.put(DIME, 0);
+        coins.put(QUARTER, 0);
     }
 
 
@@ -48,10 +57,22 @@ public class PayStationImpl implements PayStation {
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
+
         switch (coinValue) {
-            case 5: break;
-            case 10: break;
-            case 25: break;
+            case 5:
+                //gets current value of key for particular coin
+                previousValue = coins.get(NICKEL);
+                //adds one to number of particular coin added
+                coins.replace(NICKEL, previousValue+1);
+                break;
+            case 10:
+                previousValue = coins.get(DIME);
+                coins.replace(DIME, previousValue+1);
+                break;
+            case 25:
+                previousValue = coins.get(QUARTER);
+                coins.replace(QUARTER, previousValue+1);
+                break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }

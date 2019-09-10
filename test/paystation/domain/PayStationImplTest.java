@@ -14,12 +14,16 @@ package paystation.domain;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class PayStationImplTest {
 
     PayStation ps;
+    private Map<Integer, Integer> tempCoin;
 
     @Before
     public void setup() {
@@ -146,6 +150,20 @@ public class PayStationImplTest {
         ps.buy();
         ps.empty();
         assertEquals("TotalMoney should be zero after emptying", 0, ps.getTotalMoney());
+    }
+
+    /**
+     * Call to cancel returns a map containing one coin entered.
+     * Add one coin and return that coin map
+     */
+    @Test
+    public void cancelShouldReturnOneCoin() throws IllegalCoinException {
+        ps.addPayment(10);
+        tempCoin = new HashMap<>();
+        tempCoin.put(5, 0);
+        tempCoin.put(10, 1);
+        tempCoin.put(25, 0);
+        assertEquals("Should return map of one dime entered", tempCoin, ps.cancel());
     }
 
     /**
