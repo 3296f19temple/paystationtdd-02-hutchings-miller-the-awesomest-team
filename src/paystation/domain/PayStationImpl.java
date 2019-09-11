@@ -28,24 +28,18 @@ public class PayStationImpl implements PayStation {
     private int timeBought;
     private int totalMoney;
 
-    private int previousValue;
     private final int NICKEL = 5;
     private final int DIME = 10;
     private final int QUARTER = 25;
 
     //left side is coin value, right is number of coins
     private Map<Integer, Integer> coins;
-    private Map<Integer, Integer> tempCoins;
 
     public PayStationImpl (){
         insertedSoFar = 0;
         timeBought = 0;
         totalMoney = 0;
         coins = new HashMap<>();
-        //initializes hashmap, and per the rules, the map can't be null
-        coins.put(NICKEL, 0);
-        coins.put(DIME, 0);
-        coins.put(QUARTER, 0);
     }
 
 
@@ -61,18 +55,23 @@ public class PayStationImpl implements PayStation {
 
         switch (coinValue) {
             case NICKEL:
-                //gets current value of key for particular coin
-                previousValue = coins.get(NICKEL);
-                //adds one to number of particular coin added
-                coins.replace(NICKEL, previousValue+1);
+                //check if coin map contains coin value
+                if (coins.containsKey(NICKEL)){
+                    coins.put(NICKEL, 1);
+                }
+                else coins.replace(NICKEL, coins.get(NICKEL) + 1);
                 break;
             case DIME:
-                previousValue = coins.get(DIME);
-                coins.replace(DIME, previousValue+1);
+                if (coins.containsKey(DIME)){
+                    coins.put(DIME, 1);
+                }
+                else coins.replace(DIME, coins.get(DIME) + 1);
                 break;
             case QUARTER:
-                previousValue = coins.get(QUARTER);
-                coins.replace(QUARTER, previousValue+1);
+                if (coins.containsKey(QUARTER)){
+                    coins.put(QUARTER, 1);
+                }
+                else coins.replace(QUARTER, coins.get(QUARTER) + 1);
                 break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
@@ -97,23 +96,9 @@ public class PayStationImpl implements PayStation {
     @Override
     public Map<Integer, Integer> cancel(){
         timeBought = insertedSoFar = 0;
-        tempCoins = new HashMap<>(coins);
-        //tempCoins = coins; //just did not set the tempCoins correctly
-        //since we can't have a key for a coin not entered, we need to remove that from the map
-        if (tempCoins.get(NICKEL) == 0) {
-            tempCoins.remove(NICKEL);
-        }
-        if (tempCoins.get(DIME) == 0) {
-            tempCoins.remove(DIME);
-        }
-        if (tempCoins.get(QUARTER) == 0) {
-            tempCoins.remove(QUARTER);
-        }
-        coins.replace(NICKEL, 0);
-        coins.replace(DIME, 0);
-        coins.replace(QUARTER, 0);
-        //changed to tempCoins because shouldClearAfterCancel was failing
-        return tempCoins;
+        Map<Integer, Integer> toReturn = coins;
+        coins = new HashMap<>();
+        return toReturn;
     }
 
     public int getTotalMoney(){
