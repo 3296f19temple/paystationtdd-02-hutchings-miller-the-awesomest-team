@@ -211,4 +211,17 @@ public class PayStationImplTest {
     public void coinMapShouldntBeNull(){
         assertNotNull("Coin map should not be null", ps.cancel());
     }
+
+    /**
+     * Verify that cancel() returns correct coins (2x10 and 5, not a single quarter
+     */
+    @Test
+    public void cancelShouldReturnCoins() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(10);
+        ps.addPayment(5);
+        Map<Integer, Integer> coinMap = ps.cancel();
+        assertEquals("Should return 2 dimes", Integer.valueOf(2), coinMap.get(10)); //use Integer to resolve "ambiguous method call"
+        assertEquals("Should return 1 nickel", Integer.valueOf(1), coinMap.get(5));
+    }
 }

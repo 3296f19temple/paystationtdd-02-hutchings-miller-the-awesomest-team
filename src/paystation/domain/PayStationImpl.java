@@ -59,17 +59,17 @@ public class PayStationImpl implements PayStation {
             throws IllegalCoinException {
 
         switch (coinValue) {
-            case 5:
+            case NICKEL:
                 //gets current value of key for particular coin
                 previousValue = coins.get(NICKEL);
                 //adds one to number of particular coin added
                 coins.replace(NICKEL, previousValue+1);
                 break;
-            case 10:
+            case DIME:
                 previousValue = coins.get(DIME);
                 coins.replace(DIME, previousValue+1);
                 break;
-            case 25:
+            case QUARTER:
                 previousValue = coins.get(QUARTER);
                 coins.replace(QUARTER, previousValue+1);
                 break;
