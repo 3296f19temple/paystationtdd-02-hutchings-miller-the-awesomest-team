@@ -17,13 +17,11 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class PayStationImplTest {
 
     PayStation ps;
-    private Map<Integer, Integer> tempCoin;
 
     @Before
     public void setup() {
@@ -159,10 +157,8 @@ public class PayStationImplTest {
     @Test
     public void cancelShouldReturnOneCoin() throws IllegalCoinException {
         ps.addPayment(10);
-        tempCoin = new HashMap<>();
-        //tempCoin.put(5, 0);
+        Map<Integer, Integer> tempCoin = new HashMap<>();
         tempCoin.put(10, 1);
-        //tempCoin.put(25, 0);
         assertEquals("Should return map of one dime entered", tempCoin, ps.cancel());
     }
 
@@ -232,9 +228,9 @@ public class PayStationImplTest {
     public void shouldReturnMapNoKeyNotEntered() throws IllegalCoinException {
         ps.addPayment(10);
         ps.addPayment(25);
-        tempCoin = new HashMap<>();
-        tempCoin.put(10,1);
-        tempCoin.put(25,1);
-        assertEquals("Should have a map with only one dime, one quarter", tempCoin, ps.cancel());
+        Map<Integer, Integer> coinMap = ps.cancel();
+        assertEquals("Should return 1 dime", Integer.valueOf(1), coinMap.get(10)); //use Integer to resolve "ambiguous method call"
+        assertEquals("Should return 1 quarter", Integer.valueOf(1), coinMap.get(25));
+        assertTrue("Should not contain any nickels", ! coinMap.containsKey(5));
     }
 }

@@ -1,5 +1,6 @@
 package paystation.domain;
 
+import java.awt.geom.QuadCurve2D;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,21 +58,21 @@ public class PayStationImpl implements PayStation {
             case NICKEL:
                 //check if coin map contains coin value
                 if (coins.containsKey(NICKEL)){
-                    coins.put(NICKEL, 1);
+                    coins.replace(NICKEL, coins.get(NICKEL) + 1);
                 }
-                else coins.replace(NICKEL, coins.get(NICKEL) + 1);
+                else coins.put(NICKEL, 1);
                 break;
             case DIME:
                 if (coins.containsKey(DIME)){
-                    coins.put(DIME, 1);
+                    coins.replace(DIME, coins.get(DIME) + 1);
                 }
-                else coins.replace(DIME, coins.get(DIME) + 1);
+                else coins.put(DIME, 1);
                 break;
             case QUARTER:
                 if (coins.containsKey(QUARTER)){
-                    coins.put(QUARTER, 1);
+                    coins.replace(QUARTER, coins.get(QUARTER) + 1);
                 }
-                else coins.replace(QUARTER, coins.get(QUARTER) + 1);
+                else coins.put(QUARTER, 1);
                 break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
