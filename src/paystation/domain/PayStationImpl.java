@@ -35,6 +35,7 @@ public class PayStationImpl implements PayStation {
 
     //left side is coin value, right is number of coins
     private Map<Integer, Integer> coins;
+    private Map<Integer, Integer> tempCoins;
 
     public PayStationImpl (){
         insertedSoFar = 0;
@@ -96,7 +97,23 @@ public class PayStationImpl implements PayStation {
     @Override
     public Map<Integer, Integer> cancel(){
         timeBought = insertedSoFar = 0;
-        return coins;
+        tempCoins = new HashMap<>(coins);
+        //tempCoins = coins; //just did not set the tempCoins correctly
+        //since we can't have a key for a coin not entered, we need to remove that from the map
+        if (tempCoins.get(NICKEL) == 0) {
+            tempCoins.remove(NICKEL);
+        }
+        if (tempCoins.get(DIME) == 0) {
+            tempCoins.remove(DIME);
+        }
+        if (tempCoins.get(QUARTER) == 0) {
+            tempCoins.remove(QUARTER);
+        }
+        coins.replace(NICKEL, 0);
+        coins.replace(DIME, 0);
+        coins.replace(QUARTER, 0);
+        //changed to tempCoins because shouldClearAfterCancel was failing
+        return tempCoins;
     }
 
     public int getTotalMoney(){

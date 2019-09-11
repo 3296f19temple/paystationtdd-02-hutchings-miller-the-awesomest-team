@@ -160,9 +160,9 @@ public class PayStationImplTest {
     public void cancelShouldReturnOneCoin() throws IllegalCoinException {
         ps.addPayment(10);
         tempCoin = new HashMap<>();
-        tempCoin.put(5, 0);
+        //tempCoin.put(5, 0);
         tempCoin.put(10, 1);
-        tempCoin.put(25, 0);
+        //tempCoin.put(25, 0);
         assertEquals("Should return map of one dime entered", tempCoin, ps.cancel());
     }
 
@@ -223,5 +223,18 @@ public class PayStationImplTest {
         Map<Integer, Integer> coinMap = ps.cancel();
         assertEquals("Should return 2 dimes", Integer.valueOf(2), coinMap.get(10)); //use Integer to resolve "ambiguous method call"
         assertEquals("Should return 1 nickel", Integer.valueOf(1), coinMap.get(5));
+    }
+
+    /**
+     * Call to cancel returns a map that does not contain a key for a coin not entered.
+     */
+    @Test
+    public void shouldReturnMapNoKeyNotEntered() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(25);
+        tempCoin = new HashMap<>();
+        tempCoin.put(10,1);
+        tempCoin.put(25,1);
+        assertEquals("Should have a map with only one dime, one quarter", tempCoin, ps.cancel());
     }
 }
