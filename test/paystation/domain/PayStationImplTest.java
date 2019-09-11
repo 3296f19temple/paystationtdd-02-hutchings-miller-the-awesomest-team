@@ -233,4 +233,16 @@ public class PayStationImplTest {
         assertEquals("Should return 1 quarter", Integer.valueOf(1), coinMap.get(25));
         assertTrue("Should not contain any nickels", ! coinMap.containsKey(5));
     }
+
+    /**
+     * Call to buy clears coin map
+     * Call cancel after buy to show that the map is empty
+     */
+    @Test
+    public void buyShouldClearMap() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(25);
+        ps.buy();
+        assertEquals("Call cancel, should return empty map", 0, ps.cancel().size());
+    }
 }

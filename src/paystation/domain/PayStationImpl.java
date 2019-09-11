@@ -108,5 +108,6 @@ public class PayStationImpl implements PayStation {
     
     private void reset() {
         timeBought = insertedSoFar = 0;
+        coins.clear(); //points coin to new empty map
     }
 }
