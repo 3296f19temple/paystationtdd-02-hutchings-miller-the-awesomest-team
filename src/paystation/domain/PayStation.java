@@ -70,4 +70,15 @@ public interface PayStation {
      * retrieves the total amount of money in the paystation
      */
     public int getTotalMoney();
+
+    /**
+     * getter method to return the coin map in the paystation
+     * @return a map of coins currently in the paystation
+     */
+    public Map<Integer, Integer> getCoinMap();
+
+    /**
+     * resets the paystation
+     */
+    public void reset();
 }

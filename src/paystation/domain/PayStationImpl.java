@@ -102,12 +102,19 @@ public class PayStationImpl implements PayStation {
         return toReturn;
     }
 
+    @Override
     public int getTotalMoney(){
         return totalMoney;
     }
-    
-    private void reset() {
+
+    @Override
+    public Map<Integer, Integer> getCoinMap() {
+        return coins;
+    }
+
+    @Override
+    public void reset() {
         timeBought = insertedSoFar = 0;
-        coins.clear(); //points coin to new empty map
+        coins.clear();
     }
 }

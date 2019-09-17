@@ -13,6 +13,7 @@ package paystation.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,11 @@ public class PayStationImplTest {
     @Before
     public void setup() {
         ps = new PayStationImpl();
+    }
+
+    @BeforeEach
+    public void clearState() {
+        ps.reset();
     }
 
     /**
@@ -243,6 +249,17 @@ public class PayStationImplTest {
         ps.addPayment(10);
         ps.addPayment(25);
         ps.buy();
-        assertEquals("Call cancel, should return empty map", 0, ps.cancel().size());
+        assertTrue("Coin map should be empty", ps.getCoinMap().isEmpty());
+    }
+
+    /**
+     * Call to cancel clears coin map
+     */
+    @Test
+    public void cancelShouldClearMap() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(25);
+        ps.cancel(); //call cancel once to clear map
+        assertTrue("Coin map should be empty", ps.getCoinMap().isEmpty());
     }
 }
